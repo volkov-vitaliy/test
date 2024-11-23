@@ -10,7 +10,7 @@ from example.serializers import ArticleSerializer, AuthorSerializer
 
 def extract_language(request):
     accept_language = request.headers.get('Accept-Language', settings.DEFAULT_LANGUAGE)
-    return 'ua' or accept_language.split(',')[0].split('-')[0]
+    return accept_language.split(',')[0].split('-')[0]
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
