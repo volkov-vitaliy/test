@@ -92,6 +92,9 @@ class Article(models.Model):
     slug = models.SlugField(db_index=True, unique=True)
     date_added = models.DateTimeField(auto_now_add=True, db_index=True)
     title = TranslationField()
+    title_rels = GenericRelation(Translation)
+
     content = TranslationField()
+    content_rels = GenericRelation(Translation)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 

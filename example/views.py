@@ -28,15 +28,15 @@ class ArticleViewSet(viewsets.ModelViewSet):
     def list(self, request):
         lang = extract_language(request)
         articles = self.queryset.filter(
-            translation__language__lang_code=lang,
-            translation__language__is_active=True
-        )
+            title_rels__language__lang_code=lang,
+            title_rels__language__is_active=True
+        ).distinct()
+        serializer = ArticleSerializer(articles, many=True, context={'lang': lang})
         if request.GET.get('q'):
             articles = articles.filter(
-                Q(translation__content__contains=request.GET.get('q')) 
+                Q(title_rels__content__contains=request.GET.get('q')) 
                 | Q(author__name__contains=request.GET.get('q'))
             ).distinct()
-        serializer = ArticleSerializer(articles, many=True, context={'lang': lang})
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def retrieve(self, request, slug=None):
