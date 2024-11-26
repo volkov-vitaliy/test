@@ -13,10 +13,15 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
+    content = serializers.SerializerMethodField()
 
     def get_title(self, obj):
         language_code = self.context.get("lang", settings.DEFAULT_LANGUAGE)
         return obj.get_title(language_code) or ""
+    
+    def get_content(self, obj):
+        language_code = self.context.get("lang", settings.DEFAULT_LANGUAGE)
+        return obj.get_content(language_code) or ""
 
     class Meta:
         model = Article

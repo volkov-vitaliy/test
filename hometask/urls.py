@@ -7,7 +7,7 @@ from example.views import ArticleViewSet, AuthorViewSet
 
 router = routers.DefaultRouter()
 router.register("authors", AuthorViewSet)
-router.register("articles", ArticleViewSet)
+router.register("articles", ArticleViewSet, basename="articles")
 
 urlpatterns = [
     path('', include(router.urls)),
